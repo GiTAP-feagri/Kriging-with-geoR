@@ -313,4 +313,3 @@ writeRaster(krig.map, "../mapas/Variavel_kriged",format="GTiff",
 ```
 
 
-
