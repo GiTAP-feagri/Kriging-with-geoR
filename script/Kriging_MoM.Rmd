@@ -175,7 +175,9 @@ metrics_sph = c(mae = hydroGOF::mae(loocv_sph$predicted, loocv_sph$data),
                          me = hydroGOF::me.data.frame(loocv_sph$predicted, loocv_sph$data),
                          rmse = hydroGOF::rmse(loocv_sph$predicted, loocv_sph$data),
 r2 = hydroGOF::br2(loocv_sph$predicted, loocv_sph$data),
-ave = hydroGOF::NSE(loocv_sph$predicted, loocv_sph$data))
+ave = hydroGOF::NSE(loocv_sph$predicted, loocv_sph$data,
+                    ),willmott = hydroGOF::md(loocv_sph$predicted, loocv_sph$data))
+
 ```
 
 For Exponential
@@ -185,7 +187,9 @@ metrics_exp = c(mae = hydroGOF::mae(loocv_exp$predicted, loocv_exp$data),
                          me = hydroGOF::me.data.frame(loocv_exp$predicted, loocv_exp$data),
                          rmse = hydroGOF::rmse(loocv_exp$predicted, loocv_exp$data),
 r2 = hydroGOF::br2(loocv_exp$predicted, loocv_exp$data),
-ave = hydroGOF::NSE(loocv_exp$predicted, loocv_exp$data))
+ave = hydroGOF::NSE(loocv_exp$predicted, loocv_exp$data),
+willmott = hydroGOF::md(loocv_exp
+                        $predicted, loocv_exp$data))
 ```
 
 For Gaussian
@@ -195,7 +199,8 @@ metrics_gau = c(mae = hydroGOF::mae(loocv_gau$predicted, loocv_gau$data),
                          me = hydroGOF::me.data.frame(loocv_gau$predicted, loocv_gau$data),
                          rmse = hydroGOF::rmse(loocv_gau$predicted, loocv_gau$data),
 r2 = hydroGOF::br2(loocv_gau$predicted, loocv_gau$data),
-ave = hydroGOF::NSE(loocv_gau$predicted, loocv_gau$data))
+ave = hydroGOF::NSE(loocv_gau$predicted, loocv_gau$data),
+willmott = hydroGOF::md(loocv_gau$predicted, loocv_gau$data))
 ```
 
 And then adding all together
