@@ -87,6 +87,24 @@ points(data.geo)
 var_exp = variog(data.geo, max.dist = 1200)
 plot(var_exp)
 ```
+We can explore variogram by
+
+vector containing distances:
+```{r}
+var_exp$u
+```
+
+vector with the semivariances values at u distances
+
+```{r}
+var_exp$v
+```
+
+number of pair of points by bins
+
+```{r}
+var_exp$n
+```
 
 ### 2.1.1 If you have trend, use this code instead
 
@@ -206,7 +224,13 @@ willmott = hydroGOF::md(loocv_gau$predicted, loocv_gau$data))
 And then adding all together
 
 ```{r}
-metrics = rbind(metrics_sph, metrics_exp, metrics_gau)
+metrics = data.frame(rbind(metrics_sph, metrics_exp, metrics_gau))
+```
+
+We can now export it
+
+```{r}
+write.csv(metrics, "../metrics/metrics.csv")
 ```
 
 # 4 - Kriging interpolation

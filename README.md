@@ -87,6 +87,24 @@ points(data.geo)
 var_exp = variog(data.geo, max.dist = 1200)
 plot(var_exp)
 ```
+We can explore variogram by
+
+vector containing distances:
+```{r}
+var_exp$u
+```
+
+vector with the semivariances values at u distances
+
+```{r}
+var_exp$v
+```
+
+number of pair of points by bins
+
+```{r}
+var_exp$n
+```
 
 ### 2.1.1 If you have trend, use this code instead
 
@@ -175,7 +193,9 @@ metrics_sph = c(mae = hydroGOF::mae(loocv_sph$predicted, loocv_sph$data),
                          me = hydroGOF::me.data.frame(loocv_sph$predicted, loocv_sph$data),
                          rmse = hydroGOF::rmse(loocv_sph$predicted, loocv_sph$data),
 r2 = hydroGOF::br2(loocv_sph$predicted, loocv_sph$data),
-ave = hydroGOF::NSE(loocv_sph$predicted, loocv_sph$data))
+ave = hydroGOF::NSE(loocv_sph$predicted, loocv_sph$data,
+                    ),willmott = hydroGOF::md(loocv_sph$predicted, loocv_sph$data))
+
 ```
 
 For Exponential
@@ -185,7 +205,9 @@ metrics_exp = c(mae = hydroGOF::mae(loocv_exp$predicted, loocv_exp$data),
                          me = hydroGOF::me.data.frame(loocv_exp$predicted, loocv_exp$data),
                          rmse = hydroGOF::rmse(loocv_exp$predicted, loocv_exp$data),
 r2 = hydroGOF::br2(loocv_exp$predicted, loocv_exp$data),
-ave = hydroGOF::NSE(loocv_exp$predicted, loocv_exp$data))
+ave = hydroGOF::NSE(loocv_exp$predicted, loocv_exp$data),
+willmott = hydroGOF::md(loocv_exp
+                        $predicted, loocv_exp$data))
 ```
 
 For Gaussian
@@ -195,13 +217,20 @@ metrics_gau = c(mae = hydroGOF::mae(loocv_gau$predicted, loocv_gau$data),
                          me = hydroGOF::me.data.frame(loocv_gau$predicted, loocv_gau$data),
                          rmse = hydroGOF::rmse(loocv_gau$predicted, loocv_gau$data),
 r2 = hydroGOF::br2(loocv_gau$predicted, loocv_gau$data),
-ave = hydroGOF::NSE(loocv_gau$predicted, loocv_gau$data))
+ave = hydroGOF::NSE(loocv_gau$predicted, loocv_gau$data),
+willmott = hydroGOF::md(loocv_gau$predicted, loocv_gau$data))
 ```
 
 And then adding all together
 
 ```{r}
-metrics = rbind(metrics_sph, metrics_exp, metrics_gau)
+metrics = data.frame(rbind(metrics_sph, metrics_exp, metrics_gau))
+```
+
+We can now export it
+
+```{r}
+write.csv(metrics, "../metrics/metrics.csv")
 ```
 
 # 4 - Kriging interpolation
@@ -311,6 +340,5 @@ plot(krig.map, main = paste(solo_atr, "- kriging predictions", sep = " "))
 writeRaster(krig.map, "../mapas/Variavel_kriged",format="GTiff",
             overwrite = F, NAflag=-9999)
 ```
-
 
 
